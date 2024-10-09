@@ -1,9 +1,37 @@
 
 
-let operator;
-let num1;
-let num2;
+let operator = '';
+let num1 = '';
+let num2 = '';
+let input = []
+let operators = ["*/+-"]
+const display = document.querySelector("div.calculator__display");
+const calculator = document.querySelector("div.calculator__buttons");
 
+
+// This gives us the clicked button
+// but it also gives us 
+calculator.addEventListener("click", (e) => {
+    let target = e.target;
+    if (target.matches("div.calculator__button") && operator === '') {
+        num1 += target.textContent
+        console.log("num1: " + num1)
+    } 
+    
+    })
+
+
+
+// - [x] Wenn Operator leer ist, dann schreib alle Zahlen bei Num 1 rein, 
+// Wenn komisches Sonderzeichen, dann schreib das in operator
+// wenn Operator voll ist, dann schreib alle Zahlen bei Num 2 rein,
+
+
+function cleanVariables() {
+    operator = '';
+    num1 = '';
+    num2 = '';
+}
 
 // Addition
 
