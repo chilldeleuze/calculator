@@ -27,14 +27,10 @@ calculator.addEventListener("click", (e) => {
     }
     
     // Basic logic:
-    // check if operator is empty. If yes, then add all Numbers to num1
-    // else if the input is an operator, add it to the operator variable
-    // else if there's already something in the operator variable, add all of the following numbers to num2
-
-
-    // - [x] Wenn Operator leer ist, dann schreib alle Zahlen bei Num 1 rein, 
-    // Wenn komisches Sonderzeichen, dann schreib das in operator
-    // wenn Operator voll ist, dann schreib alle Zahlen bei Num 2 rein,
+    // 1. check if operator is empty. If yes, then add all Numbers to num1
+    // 2. else if the input is an operator, add it to the operator variable
+    // 3. else if there's already something in the operator variable
+    // and add all of the following numbers to num2
 
     if (operator === '' && !operators.includes(charInput) && charInput !== '=') {
         num1 += charInput
@@ -53,7 +49,8 @@ calculator.addEventListener("click", (e) => {
     } else if (operator !== '' && num1 !== '' && num2 !== '' && charInput === "=") {
         result = operate(operator, num1, num2)
         updateDisplay(result);
-        cleanVariables();
+        updateVariables();
+        
     }
     
     })
@@ -62,19 +59,23 @@ function updateDisplay(value) {
     display.textContent = value
 } 
 
-
-
 function clearDisplay() {
     display.textContent = ''
 }
 
-
-
-
-
 function cleanVariables() {
     operator = '';
     num1 = '';
+    num2 = '';
+    result = '';
+}
+
+// this resets our main variables, similar to cleanVariables, but sets 
+// previous result to num1, so we are ready for the next round
+
+function updateVariables() {
+    num1 = result;
+    operator = '';
     num2 = '';
     result = '';
 }
