@@ -10,8 +10,8 @@ const display = document.querySelector("div.calculator__display");
 const calculator = document.querySelector("div.calculator__buttons");
 
 
-// This gives us the clicked button
-// but it also gives us 
+// This is the Event Listener, which currently also handles all the rest of the operations, 
+// which is probably not the best idea. I need to refactor this and build more functions.
 calculator.addEventListener("click", (e) => {
     let target = e.target;
     let charInput = target.textContent;
@@ -22,38 +22,61 @@ calculator.addEventListener("click", (e) => {
 
     if (charInput === 'CE') {
         cleanVariables();
+        updateDisplay('')
         return;
     }
+    
+    // Basic logic:
+    // check if operator is empty. If yes, then add all Numbers to num1
+    // else if the input is an operator, add it to the operator variable
+    // else if there's already something in the operator variable, add all of the following numbers to num2
 
-    if (operator === '' && !operators.includes(target.textContent)) {
-        num1 += target.textContent
+
+    // - [x] Wenn Operator leer ist, dann schreib alle Zahlen bei Num 1 rein, 
+    // Wenn komisches Sonderzeichen, dann schreib das in operator
+    // wenn Operator voll ist, dann schreib alle Zahlen bei Num 2 rein,
+
+    if (operator === '' && !operators.includes(charInput) && charInput !== '=') {
+        num1 += charInput
+        updateDisplay(num1)
         console.log("num1: " + num1)
         return
-    } else if (operators.includes(target.textContent) && num1 !== '') {
-        operator = target.textContent
+    } else if (operators.includes(charInput) && num1 !== '') {
+        operator = charInput
         console.log("operator: " + operator)
         return
-    } else if (operator !== '' && target.textContent !== "=") {
-        num2 += target.textContent
+    } else if (operator !== '' && charInput !== "=") {
+        num2 += charInput
         console.log("num2: " + num2)
+        updateDisplay(num2)
         return
-    } else if (operator !== '' && num1 !== '' && num2 !== '' && target.textContent === "=") {
-        console.log(operate(operator, num1, num2))
+    } else if (operator !== '' && num1 !== '' && num2 !== '' && charInput === "=") {
+        result = operate(operator, num1, num2)
+        updateDisplay(result);
+        cleanVariables();
     }
     
     })
 
+function updateDisplay(value) {
+    display.textContent = value
+} 
 
 
-// - [x] Wenn Operator leer ist, dann schreib alle Zahlen bei Num 1 rein, 
-// Wenn komisches Sonderzeichen, dann schreib das in operator
-// wenn Operator voll ist, dann schreib alle Zahlen bei Num 2 rein,
+
+function clearDisplay() {
+    display.textContent = ''
+}
+
+
+
 
 
 function cleanVariables() {
     operator = '';
     num1 = '';
     num2 = '';
+    result = '';
 }
 
 // Addition
