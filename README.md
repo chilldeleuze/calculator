@@ -11,3 +11,4 @@ A simple calculator project, as part of The Odin Project
 - [ ] report them to the authorities if users tries to divide by zero
 - [ ] give some kind of visual feedback to users when they click the buttons
 - [ ] add keyboard support
+- [ ] add display that shows last operations
